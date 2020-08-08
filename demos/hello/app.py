@@ -1,5 +1,5 @@
 from flask import Flask
-
+import click
 
 app = Flask(__name__)
 
@@ -24,6 +24,7 @@ def greet(name):
 
 
 # custom flask cli command
-@app.cli.command()
+@app.cli.command('say_hello')
 def hello():
     """Just say hello."""
+    click.echo('hello,human!')
