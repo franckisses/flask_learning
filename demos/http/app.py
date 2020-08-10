@@ -1,12 +1,12 @@
 
-from flask import Flask,request,redirect,abort,make_response,json,jsonify
+from flask import Flask,request,redirect,abort,make_response,json,jsonify,url_for,session
 
 app = Flask(__name__)
 
-@app.route('/hello')
-def hello():
-    name = request.args.get('name','Flask')
-    return '<h1>hello,%s</h1>'%name
+# @app.route('/hello')
+# def hello():
+#     name = request.args.get('name','Flask')
+#     return '<h1>hello,%s</h1>'%name
 
 
 
@@ -108,3 +108,31 @@ def foo3():
 @app.route('/foo4')
 def foo4():
     return jsonify(name='franck', age=20)
+
+
+@app.route('/foo5')
+def foo5():
+    return jsonify({'name':'franck', 'age':19})
+
+
+@app.route('/set/<name>')
+def set_cookie(name):
+    response = make_response(redirect(url_for('hello')))
+    response.set_cookie('name', name)
+    return response
+
+
+# get name value from query string and cookie
+@app.route('/')
+@app.route('/hello')
+def hello():
+    name = request.args.get('name')
+    if name is None:
+        name = request.cookies.get('name', 'Human')
+    response = '<h1>Hello, %s!</h1>' % (name)  # escape name to avoid XSS
+    # return different response according to the user's authentication status
+    if 'logged_in' in session:
+        response += '[Authenticated]'
+    else:
+        response += '[Not Authenticated]'
+    return response
