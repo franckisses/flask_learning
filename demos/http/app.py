@@ -1,5 +1,5 @@
 
-from flask import Flask,request,redirect,abort
+from flask import Flask,request,redirect,abort,make_response,json,jsonify
 
 app = Flask(__name__)
 
@@ -46,3 +46,65 @@ def myred():
 @app.route('/404')
 def not_found():
     abort(status=404)
+
+
+
+# make response
+@app.route('/foo')
+def foo():
+    response = make_response('hello,world!')
+    response.mimetype = 'text\plain'
+    return response
+
+# text
+
+@app.route('/foo1')
+def foo1():
+    note =  '''
+    Note
+    to : peter
+    from : Jane
+    heading: Reminder
+    body:Dont't forger the party!
+    ''' 
+    response = make_response(note)
+    response.mimetype = 'text\plain'
+    return response
+
+
+# html 
+
+@app.route('/foo2')
+def foo2():
+    note =  '''
+    <! DOCTYPE html>
+    <html>    
+        <body>
+            <h1>Note</h1>
+            <p>to:Peter</p>
+            <p>from:Jane</p>
+            <p>heading:Reminder</p>
+            <p>body:<strong>Dont't forget the party!</strong></p>
+        </body>
+    </html>
+    ''' 
+    response = make_response(note)
+    response.mimetype = 'text\html'
+    return response
+
+
+# return json
+@app.route('/foo3')
+def foo3():
+    data = {
+        'name':'franck',
+        'gender':'male'
+    }
+    response = make_response(json.dumps(data))
+    response.mimetype = 'application/json'
+    return response
+
+
+@app.route('/foo4')
+def foo4():
+    return jsonify(name='franck', age=20)
