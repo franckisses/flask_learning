@@ -1,7 +1,9 @@
-
+import os
 from flask import Flask,request,redirect,abort,make_response,json,jsonify,url_for,session
 
 app = Flask(__name__)
+
+app.secret_key = os.getenv('SECRET_KEY', 'this is stupid!')
 
 # @app.route('/hello')
 # def hello():
@@ -136,3 +138,25 @@ def hello():
     else:
         response += '[Not Authenticated]'
     return response
+
+
+@app.route('/login')
+def login():
+    session['logged_in'] = True
+    return redirect(url_for('hello'))
+
+
+# protect view
+@app.route('/admin')
+def admin():
+    if 'logged_in' not in session:
+        abort(403)
+    return 'Welcome to admin page.'
+
+
+# log out user
+@app.route('/logout')
+def logout():
+    if 'logged_in' in session:
+        session.pop('logged_in')
+    return redirect(url_for('hello'))
