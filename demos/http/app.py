@@ -1,6 +1,3 @@
-# ----
-# this is mu test!
-
 import os
 from flask import Flask,request,redirect,abort,make_response,json,jsonify,url_for,session
 
