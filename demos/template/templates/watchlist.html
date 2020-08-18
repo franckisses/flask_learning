@@ -19,5 +19,15 @@
     <li>{{ movie.name }} - {{ movie.year }}</li>
     {% endfor %}
 </ul>
+
+{% set navigation %}
+    <li><a href="/">home</a></li>
+    <li><a href="/about">About</a></li>
+{% endset %}
+
+
+
+
+{% set navigation = [('/','Home'),('/about','About')]%}
 </body>
 </html>
