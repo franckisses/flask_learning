@@ -20,6 +20,16 @@
     {% endfor %}
 </ul>
 
+{% filter upper %}
+    this text becomes uppercase.
+{% endfilter %}
+
+{{movied|length}}
+
+{{ user.username}}
+
+
+<h1>Hello,{{ name|default('陌生人')|title}}</h1>
 {% set navigation %}
     <li><a href="/">home</a></li>
     <li><a href="/about">About</a></li>

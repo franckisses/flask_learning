@@ -1,6 +1,6 @@
 
 import os
-from flask import Flask,render_template
+from flask import Flask,render_template,Markup
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'secret string')
@@ -36,3 +36,10 @@ def watchlist():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+
+@app.route('/hello')
+def hello():
+    text = Markup('<h1>Hello,Flask</h1>')
+    return render_template('index.html',text=text)
