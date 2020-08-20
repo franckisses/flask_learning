@@ -1,3 +1,4 @@
+import time
 import os
 from flask import Flask,request,redirect,abort,make_response,json,jsonify,url_for,session
 
@@ -11,7 +12,7 @@ app.secret_key = os.getenv('SECRET_KEY', 'this is stupid!')
 #     return '<h1>hello,%s</h1>'%name
 
 
-
+time.sleep(5)
 @app.route('/hi', methods=['GET','POST'])
 def hi():
   return 'hi'
